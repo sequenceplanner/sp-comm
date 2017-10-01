@@ -1,15 +1,16 @@
 import SPSettings._
 
 lazy val projectName = "sp-comm"
+lazy val projectVersion = "0.9.4"
 
 lazy val spDep = Def.setting(Seq(
-  PublishingSettings.orgNameFull %%% "sp-domain" % "0.9.1-SNAPSHOT"
+  PublishingSettings.orgNameFull %%% "sp-domain" % "0.9.4"
 ))
 
 lazy val buildSettings = Seq(
   name         := projectName,
   description  := "Support functions for sp micro services",
-  version      := "0.9.1-SNAPSHOT",
+  version      := projectVersion,
   libraryDependencies ++= domainDependencies.value,
   libraryDependencies ++= spDep.value,
   scmInfo := Some(ScmInfo(
