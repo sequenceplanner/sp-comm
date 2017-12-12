@@ -53,6 +53,7 @@ object APIModel {
   case object ExportModel extends Request
 
   case class ItemFilter(regexName: String = "", regexType: String = "")
+  case class StructFilter(struct: ID, query: String) extends Request
 
   case class GetItem(itemID: ID) extends Request
   case class GetItems(itemIDs: List[ID]) extends Request
@@ -74,6 +75,8 @@ object APIModel {
   case class ModelUpdate(model: ID, version: Int, noOfItems: Int, updatedItems: List[IDAble] = List(), deletedItems: List[ID] = List(), info: SPAttributes = SPAttributes()) extends Response
   case class ModelHistory(model: ID, history: List[(Int, SPAttributes)]) extends Response
 
+  case class FilteredStruct(hiddenNodes: Set[ID]) extends Response
+
   case class SPItem(item: IDAble) extends Response
   case class SPItems(items: List[IDAble]) extends Response
 
@@ -87,6 +90,7 @@ object APIModel {
     implicit val fGetModelInfo : JSFormat[GetModelInfo.type] = deriveCaseObject[GetModelInfo.type]
     implicit val fGetModelHistory : JSFormat[GetModelHistory.type] = deriveCaseObject[GetModelHistory.type]
     implicit val fItemFilter : JSFormat[ItemFilter] = Json.format[ItemFilter]
+    implicit val fStructFilter : JSFormat[StructFilter] = Json.format[StructFilter]
     implicit val fGetItem: JSFormat[GetItem] = Json.format[GetItem]
     implicit val fGetItems: JSFormat[GetItems] = Json.format[GetItems]
     implicit val fGetItemList: JSFormat[GetItemList] = Json.format[GetItemList]
@@ -98,6 +102,7 @@ object APIModel {
     implicit val fModelDeleted: JSFormat[ModelDeleted] = Json.format[ModelDeleted]
     implicit val fModelUpdate: JSFormat[ModelUpdate] = Json.format[ModelUpdate]
     implicit val fModelHistory: JSFormat[ModelHistory] = Json.format[ModelHistory]
+    implicit val fFilteredStruct: JSFormat[FilteredStruct] = Json.format[FilteredStruct]
     implicit val fSPItem: JSFormat[SPItem] = Json.format[SPItem]
     implicit val fSPItems: JSFormat[SPItems] = Json.format[SPItems]
     def defModelRequest: JSFormat[Request] = Json.format[Request]
